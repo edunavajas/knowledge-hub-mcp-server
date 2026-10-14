@@ -1,0 +1,19 @@
+{
+  "name": "knowledge-hub-mcp",
+  "version": "0.1.0",
+  "description": "Stdio MCP bridge to self-hosted n8n RAG webhooks and the Outline API.",
+  "license": "MIT",
+  "bin": {
+    "knowledge-hub-mcp": "bin/knowledge-hub-mcp.mjs"
+  },
+  "files": [
+    "bin/",
+    "knowledge_hub_mcp.py",
+    "install.sh",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
