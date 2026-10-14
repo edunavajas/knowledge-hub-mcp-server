@@ -42,7 +42,12 @@ REPO_EXCLUDED_DIRS = {
     "tmp", "generated",
 }
 REPO_DOCUMENT_NAMES = {"README.md", "AGENTS.md", "DEPLOY.md"}
-REPO_DOCUMENT_DIRS = {"docs", "design"}
+# Directorios del repositorio que se indexan. Ademas de los de por defecto, se pueden
+# anadir mas con KNOWLEDGE_HUB_REPO_DIRS (separados por comas), p. ej. para indexar los
+# posts de un blog: KNOWLEDGE_HUB_REPO_DIRS="docs,design,src/data/blog-posts".
+REPO_DOCUMENT_DIRS = {"docs", "design"} | {
+    d.strip() for d in os.environ.get("KNOWLEDGE_HUB_REPO_DIRS", "").split(",") if d.strip()
+}
 REDACTION_PATTERNS = (
     re.compile(r"(?i)(\b(?:api[_ -]?key|access[_ -]?token|auth(?:orization)?|password|secret)\b\s*[:=]\s*)([^\s,;]+)"),
     re.compile(r"\b(?:(?:ghp|github_pat|glpat)[_-]|sk-)[A-Za-z0-9_\-]{16,}\b"),
@@ -125,14 +130,20 @@ def _is_repo_doc(path: Path) -> bool:
     relative = path.relative_to(WORKSPACE_ROOT)
     if any(part in REPO_EXCLUDED_DIRS or part.endswith("-worktrees") for part in relative.parts):
         return False
-    if path.name in REPO_DOCUMENT_NAMES or path.parent.name in REPO_DOCUMENT_DIRS:
+    if path.name in REPO_DOCUMENT_NAMES:
         return True
-    return relative.parent == Path(".") and path.suffix.lower() == ".md"
+    rel = relative.as_posix()
+    for configured in REPO_DOCUMENT_DIRS:
+        configured = configured.strip("/")
+        if configured and (rel == configured or rel.startswith(configured + "/")):
+            return True
+    return relative.parent == Path(".") and path.suffix.lower() in (".md", ".mdx")
 
 
 def _repo_documents() -> list[dict]:
     documents = []
-    for path in sorted(WORKSPACE_ROOT.rglob("*.md")):
+    candidates = list(WORKSPACE_ROOT.rglob("*.md")) + list(WORKSPACE_ROOT.rglob("*.mdx"))
+    for path in sorted(candidates):
         if not path.is_file() or not _is_repo_doc(path):
             continue
         size = path.stat().st_size
