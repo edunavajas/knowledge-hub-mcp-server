@@ -2,7 +2,7 @@
 # Install the knowledge-hub-mcp stdio server (Linux and macOS).
 set -eu
 
-REPO="${KNOWLEDGE_HUB_REPO:-https://github.com/edunavajas/knowledge-hub-mcp.git}"
+REPO="${KNOWLEDGE_HUB_REPO:-https://github.com/edunavajas/knowledge-hub-mcp-server.git}"
 HOME_DIR="${KNOWLEDGE_HUB_HOME:-$HOME/.local/share/knowledge-hub-mcp}"
 BIN_DIR="${KNOWLEDGE_HUB_BIN:-$HOME/.local/bin}"
 

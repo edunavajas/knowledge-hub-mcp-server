@@ -51,14 +51,14 @@ Expone **5 herramientas**:
 El repositorio es público:
 
 ```sh
-npm install -g github:edunavajas/knowledge-hub-mcp
+npm install -g github:edunavajas/knowledge-hub-mcp-server
 knowledge-hub-mcp --version
 ```
 
 ### Opción B — install.sh
 
 ```sh
-git clone https://github.com/edunavajas/knowledge-hub-mcp.git "$HOME/.local/share/knowledge-hub-mcp"
+git clone https://github.com/edunavajas/knowledge-hub-mcp-server.git "$HOME/.local/share/knowledge-hub-mcp"
 sh "$HOME/.local/share/knowledge-hub-mcp/install.sh"
 ```
 
@@ -105,7 +105,7 @@ Todas las variables que leen el servidor y el instalador:
 | `OUTLINE_URL` | servidor | *(vacío)* | URL base de la instancia de Outline. |
 | `RAG_SEARCH_API_KEY` | servidor | *(vacío)* | Se envía como `X-RAG-API-Key` a n8n. |
 | `OUTLINE_API_KEY` | servidor | *(vacío)* | Se envía como `Authorization: Bearer` a Outline. |
-| `KNOWLEDGE_HUB_REPO` | install.sh | `https://github.com/edunavajas/knowledge-hub-mcp.git` | Remoto git a clonar. |
+| `KNOWLEDGE_HUB_REPO` | install.sh | `https://github.com/edunavajas/knowledge-hub-mcp-server.git` | Remoto git a clonar. |
 | `KNOWLEDGE_HUB_HOME` | install.sh | `$HOME/.local/share/knowledge-hub-mcp` | Ubicación del checkout. |
 | `KNOWLEDGE_HUB_BIN` | install.sh | `$HOME/.local/bin` | Dónde se crea el symlink `knowledge-hub-mcp`. |
 
